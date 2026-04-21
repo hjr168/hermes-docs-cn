@@ -7,8 +7,8 @@ const config: Config = {
   tagline: 'Hermes Agent 中文社区翻译',
   favicon: 'img/favicon.ico',
 
-  url: 'https://hjr168.github.io',
-  baseUrl: '/hermes-docs-cn/',
+  url: 'https://hermes-doc-cn.huangjiarong.top',
+  baseUrl: '/',
 
   organizationName: 'hjr168',
   projectName: 'hermes-docs-cn',
