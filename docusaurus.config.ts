@@ -8,7 +8,7 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   url: 'https://hjr168.github.io',
-  baseUrl: '/',
+  baseUrl: '/hermes-docs-cn/',
 
   organizationName: 'hjr168',
   projectName: 'hermes-docs-cn',
