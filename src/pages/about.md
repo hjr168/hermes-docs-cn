@@ -33,6 +33,7 @@ npm run serve    # 本地预览构建结果
 
 ## 致谢
 
+- 特别鸣谢：小白，山鸡，屎忽，大奶，番薯提供的宝贵意见
 - [Nous Research](https://nousresearch.com) — 原始项目及文档
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) — 开源 AI Agent 框架
 - [个人主页](https://huangjiarong.top/) — 站长主页
