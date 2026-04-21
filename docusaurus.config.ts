@@ -43,6 +43,18 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        createRedirects(existingPath: string) {
+          if (existingPath.startsWith('/en/')) return undefined;
+          return ['/zh-CN' + existingPath];
+        },
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
