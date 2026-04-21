@@ -98,6 +98,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/about',
+          label: '关于',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/NousResearch/hermes-agent',
           label: '上游项目',
           position: 'right',
