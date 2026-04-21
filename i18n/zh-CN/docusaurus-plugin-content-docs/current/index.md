@@ -24,24 +24,24 @@ displayed_sidebar: docs
 
 | | |
 |---|---|
-| 🚀 **[安装](/docs/getting-started/installation)** | 60 秒内在 Linux、macOS 或 WSL2 上完成安装 |
-| 📖 **[快速入门教程](/docs/getting-started/quickstart)** | 你的第一次对话及值得尝试的核心功能 |
-| 🗺️ **[学习路径](/docs/getting-started/learning-path)** | 根据你的经验水平找到合适的文档 |
-| ⚙️ **[配置](/docs/user-guide/configuration)** | 配置文件、Provider（提供商）、模型和选项 |
-| 💬 **[消息网关](/docs/user-guide/messaging)** | 设置 Telegram、Discord、Slack 或 WhatsApp |
-| 🔧 **[工具与工具集](/docs/user-guide/features/tools)** | 47 个内置工具及配置方法 |
-| 🧠 **[记忆系统](/docs/user-guide/features/memory)** | 跨会话持续增长的持久化记忆 |
-| 📚 **[Skill 系统](/docs/user-guide/features/skills)** | Agent 创建并复用的程序性记忆 |
-| 🔌 **[MCP 集成](/docs/user-guide/features/mcp)** | 连接 MCP Server，过滤其工具，安全地扩展 Hermes |
-| 🧭 **[在 Hermes 中使用 MCP](/docs/guides/use-mcp-with-hermes)** | 实用的 MCP 配置模式、示例和教程 |
-| 🎙️ **[语音模式](/docs/user-guide/features/voice-mode)** | 在 CLI、Telegram、Discord 和 Discord 语音频道中的实时语音交互 |
-| 🗣️ **[在 Hermes 中使用语音模式](/docs/guides/use-voice-mode-with-hermes)** | Hermes 语音工作流的上手配置和使用模式 |
-| 🎭 **[个性与 SOUL.md](/docs/user-guide/features/personality)** | 通过全局 SOUL.md 定义 Hermes 的默认风格 |
-| 📄 **[上下文文件](/docs/user-guide/features/context-files)** | 塑造每次对话的项目上下文文件 |
-| 🔒 **[安全](/docs/user-guide/security)** | 命令审批、授权、容器隔离 |
-| 💡 **[技巧与最佳实践](/docs/guides/tips)** | 充分发挥 Hermes 的快速上手建议 |
-| 🏗️ **[架构](/docs/developer-guide/architecture)** | 底层工作原理 |
-| ❓ **[常见问题与排障](/docs/reference/faq)** | 常见问题及解决方案 |
+| 🚀 **[安装](/getting-started/installation)** | 60 秒内在 Linux、macOS 或 WSL2 上完成安装 |
+| 📖 **[快速入门教程](/getting-started/quickstart)** | 你的第一次对话及值得尝试的核心功能 |
+| 🗺️ **[学习路径](/getting-started/learning-path)** | 根据你的经验水平找到合适的文档 |
+| ⚙️ **[配置](/user-guide/configuration)** | 配置文件、Provider（提供商）、模型和选项 |
+| 💬 **[消息网关](/user-guide/messaging)** | 设置 Telegram、Discord、Slack 或 WhatsApp |
+| 🔧 **[工具与工具集](/user-guide/features/tools)** | 47 个内置工具及配置方法 |
+| 🧠 **[记忆系统](/user-guide/features/memory)** | 跨会话持续增长的持久化记忆 |
+| 📚 **[Skill 系统](/user-guide/features/skills)** | Agent 创建并复用的程序性记忆 |
+| 🔌 **[MCP 集成](/user-guide/features/mcp)** | 连接 MCP Server，过滤其工具，安全地扩展 Hermes |
+| 🧭 **[在 Hermes 中使用 MCP](/guides/use-mcp-with-hermes)** | 实用的 MCP 配置模式、示例和教程 |
+| 🎙️ **[语音模式](/user-guide/features/voice-mode)** | 在 CLI、Telegram、Discord 和 Discord 语音频道中的实时语音交互 |
+| 🗣️ **[在 Hermes 中使用语音模式](/guides/use-voice-mode-with-hermes)** | Hermes 语音工作流的上手配置和使用模式 |
+| 🎭 **[个性与 SOUL.md](/user-guide/features/personality)** | 通过全局 SOUL.md 定义 Hermes 的默认风格 |
+| 📄 **[上下文文件](/user-guide/features/context-files)** | 塑造每次对话的项目上下文文件 |
+| 🔒 **[安全](/user-guide/security)** | 命令审批、授权、容器隔离 |
+| 💡 **[技巧与最佳实践](/guides/tips)** | 充分发挥 Hermes 的快速上手建议 |
+| 🏗️ **[架构](/developer-guide/architecture)** | 底层工作原理 |
+| ❓ **[常见问题与排障](/reference/faq)** | 常见问题及解决方案 |
 
 ## 核心特性
 
@@ -57,4 +57,4 @@ displayed_sidebar: docs
 - **研究就绪** —— 批量处理、轨迹导出、配合 Atropos 进行 RL（强化学习）训练。由 [Nous Research](https://nousresearch.com) 构建 —— Hermes、Nomos 和 Psyche 模型背后的实验室
 
 ---
-> 📝 本文由 AI 翻译，如有疑问请参考[英文原版](/docs/index)
+> 📝 本文由 AI 翻译，如有疑问请参考[英文原版](/index)
