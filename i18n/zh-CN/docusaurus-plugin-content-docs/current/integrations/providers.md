@@ -953,6 +953,7 @@ ClawRouter 需要在 Base 或 Solana 上有 USDC 资金的钱包进行支付。�
 | [Groq](https://groq.com) | `https://api.groq.com/openai/v1` | 超快推理 |
 | [DeepSeek](https://deepseek.com) | `https://api.deepseek.com/v1` | DeepSeek 模型 |
 | [Fireworks AI](https://fireworks.ai) | `https://api.fireworks.ai/inference/v1` | 快速开放模型托管 |
+| [GMI Cloud](https://www.gmicloud.ai/) | `https://api.gmi-serving.com/v1` | 托管式 OpenAI 兼容推理 |
 | [Cerebras](https://cerebras.ai) | `https://api.cerebras.ai/v1` | 晶圆级芯片推理 |
 | [Mistral AI](https://mistral.ai) | `https://api.mistral.ai/v1` | Mistral 模型 |
 | [OpenAI](https://openai.com) | `https://api.openai.com/v1` | 直接 OpenAI 访问 |

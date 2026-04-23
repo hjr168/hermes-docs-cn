@@ -32,10 +32,10 @@ description: "如何为 Hermes Agent 贡献 — 开发设置、代码风格、PR
 
 | 要求 | 说明 |
 |------|------|
-| **Git** | 支持 `--recurse-submodules` |
+| **Git** | 支持 `--recurse-submodules`，并已安装 `git-lfs` 扩展 |
 | **Python 3.11+** | 如果缺失 uv 会安装 |
 | **uv** | 快速 Python 包管理器（[安装](https://docs.astral.sh/uv/)） |
-| **Node.js 18+** | 可选 — 浏览器工具和 WhatsApp 桥接需要 |
+| **Node.js 20+** | 可选 — 浏览器工具和 WhatsApp 桥接需要（与根 `package.json` engines 匹配） |
 
 ### 克隆和安装
 

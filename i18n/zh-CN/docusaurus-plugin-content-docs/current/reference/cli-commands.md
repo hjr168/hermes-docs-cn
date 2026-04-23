@@ -27,6 +27,8 @@ hermes [global-options] <command> [subcommand/options]
 | `--worktree`、`-w` | 在隔离的 Git Worktree（工作树）中启动，适用于并行 Agent 工作流。 |
 | `--yolo` | 跳过危险命令的审批提示。 |
 | `--pass-session-id` | 在 Agent 的系统提示中包含会话 ID。 |
+| `--ignore-user-config` | 忽略 `~/.hermes/config.yaml`，回退到内置默认值。`.env` 中的凭据仍会加载。 |
+| `--ignore-rules` | 跳过自动注入 `AGENTS.md`、`SOUL.md`、`.cursorrules`、记忆和预加载 Skill。 |
 | `--tui` | 启动 [TUI](../user-guide/tui.md) 界面而非经典 CLI。等同于 `HERMES_TUI=1`。 |
 | `--dev` | 配合 `--tui` 使用：通过 `tsx` 直接运行 TypeScript 源码而非预构建包（面向 TUI 贡献者）。 |
 
@@ -92,6 +94,8 @@ hermes chat [options]
 | `--checkpoints` | 在破坏性文件变更前启用文件系统检查点。 |
 | `--yolo` | 跳过审批提示。 |
 | `--pass-session-id` | 将会话 ID 传入系统提示。 |
+| `--ignore-user-config` | 忽略 `~/.hermes/config.yaml`，使用内置默认值。`.env` 中的凭据仍会加载。对于隔离的 CI 运行、可重现的 Bug 报告和第三方集成很有用。 |
+| `--ignore-rules` | 跳过自动注入 `AGENTS.md`、`SOUL.md`、`.cursorrules`、持久记忆和预加载 Skill。结合 `--ignore-user-config` 可实现完全隔离运行。 |
 | `--source <tag>` | 会话来源标签，用于过滤（默认：`cli`）。使用 `tool` 表示不应出现在用户会话列表中的第三方集成。 |
 | `--max-turns <N>` | 每次对话的最大工具调用迭代次数（默认：90，或配置中的 `agent.max_turns`）。 |
 
@@ -104,6 +108,7 @@ hermes chat --provider openrouter --model anthropic/claude-sonnet-4.6
 hermes chat --toolsets web,terminal,skills
 hermes chat --quiet -q "Return only JSON"
 hermes chat --worktree -q "Review this repo and open a PR"
+hermes chat --ignore-user-config --ignore-rules -q "Repro without my personal setup"
 ```
 
 ## `hermes model`

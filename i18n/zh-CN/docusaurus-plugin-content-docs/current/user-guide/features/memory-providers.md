@@ -318,7 +318,11 @@ echo "HINDSIGHT_API_KEY=your-key" >> ~/.hermes/.env
 | `auto_retain` | `true` | 自动保留对话轮次 |
 | `auto_recall` | `true` | 每轮之前自动召回记忆 |
 | `retain_async` | `true` | 在服务器上异步处理保留 |
-| `tags` | — | 存储记忆时应用的标签 |
+| `retain_context` | `conversation between Hermes Agent and the User` | 保留记忆的上下文标签 |
+| `retain_tags` | — | 应用于保留记忆的默认标签；与每次调用的工具标签合并 |
+| `retain_source` | — | 附加到保留记忆的可选 `metadata.source` |
+| `retain_user_prefix` | `User` | 自动保留转录中用户轮次使用的标签 |
+| `retain_assistant_prefix` | `Assistant` | 自动保留转录中助手轮次使用的标签 |
 | `recall_tags` | — | 召回时过滤的标签 |
 
 完整配置参考参见[插件 README](https://github.com/NousResearch/hermes-agent/blob/main/plugins/memory/hindsight/README.md)。

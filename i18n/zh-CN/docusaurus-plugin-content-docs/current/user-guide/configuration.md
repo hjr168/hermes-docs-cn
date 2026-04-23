@@ -1193,6 +1193,8 @@ web:
 
 **Parallel 搜索模式：** 设置 `PARALLEL_SEARCH_MODE` 控制搜索行为 — `fast`、`one-shot` 或 `agentic`（默认：`agentic`）。
 
+**Exa：** 在 `~/.hermes/.env` 中设置 `EXA_API_KEY`。支持 `category` 过滤（`company`、`research paper`、`news`、`people`、`personal site`、`pdf`）以及域名/日期过滤。
+
 ## 浏览器
 
 配置浏览器自动化行为：

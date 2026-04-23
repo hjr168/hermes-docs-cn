@@ -110,6 +110,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/sync-log',
+          label: '同步日志',
+          position: 'left',
+        },
+        {
           to: '/about',
           label: '关于',
           position: 'left',
