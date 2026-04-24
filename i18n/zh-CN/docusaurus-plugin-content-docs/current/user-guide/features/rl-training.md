@@ -12,8 +12,8 @@ Hermes Agent 包含一个集成的 RL（强化学习，Reinforcement Learning）
 
 RL 训练系统由三个组件组成：
 
-1. **Atropos** — 轨迹 API（Application Programming Interface）服务器，协调环境交互、管理推演组并计算优势值
-2. **Tinker** — 训练服务，处理模型权重、LoRA 训练、采样/推理和优化器步骤
+1. **[Atropos](https://github.com/NousResearch/atropos)** — 轨迹 API（Application Programming Interface）服务器，协调环境交互、管理推演组并计算优势值
+2. **[Tinker](https://thinkingmachines.ai/tinker/)** — 训练服务，处理模型权重、LoRA 训练、采样/推理和优化器步骤
 3. **环境** — 定义任务、评分和奖励函数的 Python 类（例如 GSM8K 数学问题）
 
 Agent 可以发现环境、配置训练参数、启动训练运行和监控指标——全部通过一组 `rl_*` 工具完成。
@@ -24,7 +24,7 @@ RL 训练需要：
 
 - **Python >= 3.11**（Tinker 包要求）
 - **TINKER\_API\_KEY** — Tinker 训练服务的 API 密钥
-- **WANDB\_API\_KEY** — Weights & Biases 指标跟踪的 API 密钥
+- **WANDB\_API\_KEY** — [Weights & Biases](https://wandb.ai/) 指标跟踪的 API 密钥
 - `tinker-atropos` 子模块（位于 Hermes 根目录的 `tinker-atropos/` 下）
 
 ```bash

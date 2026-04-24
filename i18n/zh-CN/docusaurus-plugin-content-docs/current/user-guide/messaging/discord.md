@@ -275,6 +275,7 @@ Discord 行为通过两个文件控制：**`~/.hermes/.env`** 用于凭据和环
 | `DISCORD_ALLOWED_ROLES` | 否 | — | Discord 角色 ID，逗号分隔。拥有任一角色的成员被授权 — 与 `DISCORD_ALLOWED_USERS` 为 OR 关系。连接时自动启用 **Server Members Intent**。适用于管理团队变动的场景：新管理员一旦被授予角色就获得访问权限，无需更改配置。 |
 | `DISCORD_HOME_CHANNEL` | 否 | — | Bot 发送主动消息（Cron 输出、提醒、通知）的频道 ID。 |
 | `DISCORD_HOME_CHANNEL_NAME` | 否 | `"Home"` | 主频道在日志和状态输出中的显示名称。 |
+| `DISCORD_COMMAND_SYNC_POLICY` | 否 | `"safe"` | 控制原生斜杠命令启动同步。`"safe"` 差异对比现有全局命令，仅更新有变化的部分，当 Discord 元数据变更无法通过补丁应用时重新创建命令。`"bulk"` 保留旧的 `tree.sync()` 行为。`"off"` 完全跳过启动同步。 |
 | `DISCORD_REQUIRE_MENTION` | 否 | `true` | 为 `true` 时，Bot 仅在被 `@mentioned` 时响应服务器频道。设为 `false` 可响应每个频道的所有消息。 |
 | `DISCORD_FREE_RESPONSE_CHANNELS` | 否 | — | Bot 无需 `@mention` 即可响应的频道 ID，逗号分隔，即使 `DISCORD_REQUIRE_MENTION` 为 `true`。 |
 | `DISCORD_IGNORE_NO_MENTION` | 否 | `true` | 为 `true` 时，如果一条消息 `@mentions` 了其他用户但**未**提及 Bot，Bot 保持沉默。防止 Bot 跳入针对其他人的对话。仅适用于服务器频道，不适用于私信。 |

@@ -6,9 +6,9 @@ description: "Hermes 内置工具的权威参考，按工具集分组"
 
 # 内置工具参考
 
-本页记录了 Hermes 工具注册表中全部 53 个内置工具，按工具集（toolset）分组。工具的可用性因平台、凭证和已启用的工具集而异。
+本页记录了 Hermes 工具注册表中全部 55 个内置工具，按工具集（toolset）分组。工具的可用性因平台、凭证和已启用的工具集而异。
 
-**快速统计：** 10 个浏览器工具、4 个文件工具、10 个 RL 工具、4 个 Home Assistant 工具、2 个终端工具、2 个 Web 工具、5 个飞书工具，以及 15 个其他工具集中的独立工具。
+**快速统计：** 12 个浏览器工具、4 个文件工具、10 个 RL 工具、4 个 Home Assistant 工具、2 个终端工具、2 个 Web 工具、5 个飞书工具，以及 15 个其他工具集中的独立工具。
 
 :::tip MCP 工具
 除内置工具外，Hermes 还可以从 MCP（Model Context Protocol，模型上下文协议）服务器动态加载工具。MCP 工具会带有服务器名称前缀（例如，`github` MCP 服务器的 `github_create_issue`）。有关配置详情，请参阅 [MCP 集成](/docs/user-guide/features/mcp)。
@@ -20,6 +20,7 @@ description: "Hermes 内置工具的权威参考，按工具集分组"
 |------|------|----------|
 | `browser_back` | 在浏览器历史中导航回上一页。需要先调用 browser_navigate。 | — |
 | `browser_cdp` | 发送原始 Chrome DevTools Protocol (CDP) 命令。用于 browser_navigate、browser_click、browser_console 等未覆盖的浏览器操作的逃生通道。仅在会话开始时可达到 CDP 端点时可用 — 通过 `/browser connect` 或 `browser.cdp_url` 配置。参见 https://chromedevtools.github.io/devtools-protocol/ | — |
+| `browser_dialog` | 响应原生 JavaScript 对话框（alert / confirm / prompt / beforeunload）。先调用 `browser_snapshot` — 待处理对话框出现在其 `pending_dialogs` 字段中。然后调用 `browser_dialog(action='accept'|'dismiss')`。与 `browser_cdp` 相同的可用性（Browserbase 或 `/browser connect`）。 | — |
 | `browser_click` | 通过快照中的 ref ID（如 '@e5'）点击元素。ref ID 显示在快照输出的方括号中。需要先调用 browser_navigate 和 browser_snapshot。 | — |
 | `browser_console` | 获取当前页面的浏览器控制台输出和 JavaScript 错误。返回 console.log/warn/error/info 消息以及未捕获的 JS 异常。用于检测静默 JavaScript 错误、失败的 API 调用和应用程序警告。需要先调用… | — |
 | `browser_get_images` | 获取当前页面上所有图片的列表，包括其 URL 和 alt 文本。适用于查找需要用视觉工具分析的图片。需要先调用 browser_navigate。 | — |

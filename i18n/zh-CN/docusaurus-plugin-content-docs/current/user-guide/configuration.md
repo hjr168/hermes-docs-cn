@@ -425,6 +425,35 @@ file_read_max_chars: 30000
 
 Agent 还会自动去重文件读取 —— 如果同一文件区域被读取两次且文件未更改，则返回轻量级存根而非重新发送内容。这会在上下文压缩时重置，以便 Agent 在内容被摘要后重新读取文件。
 
+## 工具输出截断限制
+
+三个相关限制控制工具在 Hermes 截断之前可以返回多少原始输出：
+
+```yaml
+tool_output:
+  max_bytes: 50000        # 终端输出上限（字符）
+  max_lines: 2000         # read_file 分页上限
+  max_line_length: 2000   # read_file 行号视图中每行的上限
+```
+
+- **`max_bytes`** — 当 `terminal` 命令产生超过此字符数的 combined stdout/stderr 时，Hermes 保留前 40% 和后 60%，并在中间插入 `[OUTPUT TRUNCATED]` 通知。默认 `50000`（≈ 典型 tokeniser 的 12-15K tokens）。
+- **`max_lines`** — 单次 `read_file` 调用 `limit` 参数的上限。超过此值的请求被限制，因此单次读取不会淹没上下文窗口。默认 `2000`。
+- **`max_line_length`** — `read_file` 发出行号视图时应用的每行上限。超过此值的行被截断为该字符数，后跟 `... [truncated]`。默认 `2000`。
+
+对于具有大上下文窗口且每次调用可以处理更多原始输出的模型，请提高限制。对于小上下文模型，请降低限制以保持工具结果紧凑：
+
+```yaml
+# 大上下文模型（200K+）
+tool_output:
+  max_bytes: 150000
+  max_lines: 5000
+
+# 小型本地模型（16K 上下文）
+tool_output:
+  max_bytes: 20000
+  max_lines: 500
+```
+
 ## Git Worktree 隔离
 
 启用隔离的 Git Worktree 以在同一仓库上并行运行多个 Agent：
@@ -1204,9 +1233,25 @@ browser:
   inactivity_timeout: 120        # 空闲会话自动关闭的秒数
   command_timeout: 30             # 浏览器命令超时秒数（截图、导航等）
   record_sessions: false         # 自动录制浏览器会话为 WebM 视频到 ~/.hermes/browser_recordings/
+  # 可选的 CDP 覆盖 — 设置后，Hermes 直接附加到你自己的
+  # Chrome（通过 /browser connect）而非启动无头浏览器。
+  cdp_url: ""
+  # 对话框监督器 — 控制原生 JS 对话框（alert / confirm / prompt）
+  # 在 CDP 后端附加时如何处理（Browserbase、通过
+  # /browser connect 的本地 Chrome）。在 Camofox 和默认本地 agent-browser 模式下忽略。
+  dialog_policy: must_respond    # must_respond | auto_dismiss | auto_accept
+  dialog_timeout_s: 300          # must_respond 下的安全自动关闭（秒）
   camofox:
     managed_persistence: false   # 为 true 时，Camofox 会话跨重启持久化 Cookie/登录
 ```
+
+**对话框策略：**
+
+- `must_respond`（默认）— 捕获对话框，在 `browser_snapshot.pending_dialogs` 中显示，并等待 Agent 调用 `browser_dialog(action=...)`。如果在 `dialog_timeout_s` 秒内没有响应，对话框自动关闭以防止页面 JS 线程永远停滞。
+- `auto_dismiss` — 立即捕获并关闭。Agent 仍会在 `browser_snapshot.recent_dialogs` 中看到对话框记录，之后带有 `closed_by="auto_policy"`。
+- `auto_accept` — 立即捕获并接受。适用于带有强制 `beforeunload` 对话框的页面。
+
+详见 [浏览器功能页](./features/browser.md#browser_dialog) 了解完整的对话框工作流程。
 
 浏览器工具集支持多个 Provider。详见 [浏览器功能页](/docs/user-guide/features/browser) 了解 Browserbase、Browser Use 和本地 Chrome CDP 设置。
 

@@ -78,6 +78,12 @@ docker run -it --rm \
   nousresearch/hermes-agent
 ```
 
+或者，如果你已经在运行中的容器中打开了终端（例如通过 Docker Desktop），直接运行：
+
+```sh
+/opt/hermes/.venv/bin/hermes
+```
+
 ## 持久化卷
 
 `/opt/data` 卷是所有 Hermes 状态的唯一权威来源。它映射到宿主机的 `~/.hermes/` 目录，包含：

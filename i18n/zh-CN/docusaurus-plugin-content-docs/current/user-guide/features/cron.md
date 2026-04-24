@@ -338,6 +338,8 @@ cronjob(action="remove", job_id="...")
 
 任务存储在 `~/.hermes/cron/jobs.json` 中。任务运行的输出保存到 `~/.hermes/cron/output/{job_id}/{timestamp}.md`。
 
+任务的 `model` 和 `provider` 可能存储为 `null`。当这些字段被省略时，Hermes 在执行时从全局配置中解析它们。它们仅在设置了 per-job 覆盖时出现在任务记录中。
+
 存储使用原子文件写入，因此中断的写入不会留下部分写入的任务文件。
 
 ## 自包含提示仍然重要

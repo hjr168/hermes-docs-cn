@@ -72,7 +72,7 @@ run_conversation()
      - anthropic_messages: 通过 anthropic_adapter.py 转换
   6. 注入临时提示层（预算警告、上下文压力）
   7. 如果在 Anthropic 上，应用 prompt 缓存标记
-  8. 执行可中断的 API 调用（_api_call_with_interrupt）
+  8. 执行可中断的 API 调用（_interruptible_api_call）
   9. 解析响应：
      - 如果有 tool_calls: 执行它们，追加结果，回到步骤 5
      - 如果是文本响应: 持久化会话，必要时刷新内存，返回
@@ -105,7 +105,7 @@ Provider 会验证这些序列，拒绝格式不正确的历史。
 
 ## 可中断的 API 调用
 
-API 请求被包装在 `_api_call_with_interrupt()` 中，它在后台线程中运行实际的 HTTP 调用，同时监控中断事件：
+API 请求被包装在 `_interruptible_api_call()` 中，它在后台线程中运行实际的 HTTP 调用，同时监控中断事件：
 
 ```text
 ┌────────────────────────────────────────────────────┐

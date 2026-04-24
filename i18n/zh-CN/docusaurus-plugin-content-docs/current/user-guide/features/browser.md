@@ -355,7 +355,50 @@ browser_cdp(method="Runtime.evaluate",
 browser_cdp(method="Network.getAllCookies")
 ```
 
-浏览器级别的方法（`Target.*`、`Browser.*`、`Storage.*`）省略 `target_id`。页面级别的方法（`Page.*`、`Runtime.*`、`DOM.*`、`Emulation.*`）需要从 `Target.getTargets` 获取的 `target_id`。每次调用独立 — 调用之间不保持会话。
+浏览器级别的方法（`Target.*`、`Browser.*`、`Storage.*`）省略 `target_id`。页面级别的方法（`Page.*`、`Runtime.*`、`DOM.*`、`Emulation.*`）需要从 `Target.getTargets` 获取的 `target_id`。每次无状态调用独立 — 调用之间不保持会话。
+
+**跨域 iframe：** 传递 `frame_id`（从 `browser_snapshot.frame_tree.children[]`，其中 `is_oopif=true`）以通过该 iframe 的监督器实时会话路由 CDP 调用。这就是跨域 iframe 内部 `Runtime.evaluate` 在 Browserbase 上工作的方式，因为无状态 CDP 连接会遇到签名 URL 过期。示例：
+
+```
+browser_cdp(
+  method="Runtime.evaluate",
+  params={"expression": "document.title", "returnByValue": True},
+  frame_id="<frame_id from browser_snapshot>",
+)
+```
+
+同域 iframe 不需要 `frame_id` — 改用顶级 `Runtime.evaluate` 中的 `document.querySelector('iframe').contentDocument`。
+
+### `browser_dialog`
+
+响应原生 JS 对话框（`alert` / `confirm` / `prompt` / `beforeunload`）。在此工具存在之前，对话框会静默阻塞页面的 JavaScript 线程，后续 `browser_*` 调用会挂起或抛出错误；现在 Agent 在 `browser_snapshot` 输出中看到待处理对话框并明确响应。
+
+**工作流程：**
+1. 调用 `browser_snapshot`。如果对话框阻塞了页面，它显示为 `pending_dialogs: [{"id": "d-1", "type": "alert", "message": "..."}]`。
+2. 调用 `browser_dialog(action="accept")` 或 `browser_dialog(action="dismiss")`。对于 `prompt()` 对话框，传递 `prompt_text="..."` 来提供响应。
+3. 重新快照 — `pending_dialogs` 为空；页面的 JS 线程已恢复。
+
+**检测通过持久 CDP 监督器自动进行** — 每个任务一个 WebSocket，订阅 Page/Runtime/Target 事件。监督器还在快照中填充 `frame_tree` 字段，使 Agent 可以看到当前页面的 iframe 结构，包括跨域（OOPIF）iframe。
+
+**可用性矩阵：**
+
+| 后端 | 通过 `pending_dialogs` 检测 | 响应（`browser_dialog` 工具） |
+|---|---|---|
+| 通过 `/browser connect` 或 `browser.cdp_url` 的本地 Chrome | ✓ | ✓ 完整工作流程 |
+| Browserbase | ✓ | ✓ 完整工作流程（通过注入的 XHR 桥接） |
+| Camofox / 默认本地 agent-browser | ✗ | ✗（无 CDP 端点） |
+
+**在 Browserbase 上的工作原理。** Browserbase 的 CDP 代理在服务端 ~10ms 内自动关闭真实原生对话框，所以我们不能使用 `Page.handleJavaScriptDialog`。监督器通过 `Page.addScriptToEvaluateOnNewDocument` 注入一个小脚本，用同步 XHR 覆盖 `window.alert`/`confirm`/`prompt`。我们通过 `Fetch.enable` 拦截这些 XHR — 页面的 JS 线程在 XHR 上保持阻塞，直到我们用 Agent 的响应调用 `Fetch.fulfillRequest`。`prompt()` 返回值不变地往返进入页面 JS。
+
+**对话框策略** 在 `config.yaml` 的 `browser.dialog_policy` 下配置：
+
+| 策略 | 行为 |
+|--------|----------|
+| `must_respond`（默认） | 捕获，在快照中显示，等待显式 `browser_dialog()` 调用。如果 `browser.dialog_timeout_s`（默认 300 秒）后没有响应，安全自动关闭，这样有缺陷的 Agent 不会永远停滞。 |
+| `auto_dismiss` | 立即捕获并关闭。Agent 仍会在 `browser_state` 历史中看到对话框，但不需要采取行动。 |
+| `auto_accept` | 立即捕获并接受。适用于带有强制 `beforeunload` 对话框的页面。 |
+
+**Frame tree** 在 `browser_snapshot.frame_tree` 内部限制为 30 帧和 OOPIF 深度 2，以保持广告密集页面的负载bounded。当达到限制时会显示 `truncated: true` 标志；需要完整树的 Agent 可以使用 `Page.getFrameTree` 的 `browser_cdp`。
 
 ## 实用示例
 

@@ -253,7 +253,7 @@ Provider 直到出现在交互式 `hermes model` 流程中才可被发现。
 - `__init__` 选择了新的 `api_mode`
 - provider 的客户端构建正常工作
 - `_build_api_kwargs()` 知道如何格式化请求
-- `_api_call_with_interrupt()` 调度到正确的客户端调用
+- `_interruptible_api_call()` 调度到正确的客户端调用
 - 中断 / 客户端重建路径正常工作
 - 响应验证接受 provider 的格式
 - 结束原因提取正确

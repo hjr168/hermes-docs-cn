@@ -9,6 +9,33 @@ description: Hermes Agent 中文文档同步记录
 
 ---
 
+## 2026-04-24
+
+**同步上游更改：16 个文件更新 + 133 个新 Skill 文档**
+
+| 文件 | 更新内容 |
+|------|----------|
+| `user-guide/features/browser.md` | 新增 `browser_dialog` 工具文档：响应原生 JS 对话框（alert/confirm/prompt/beforeunload）、跨域 iframe 支持、frame_tree 字段说明 |
+| `user-guide/configuration.md` | 新增工具输出截断限制配置（`tool_output.max_bytes/max_lines/max_line_length`）、新增 `browser.cdp_url` 和 `browser.dialog_policy` 配置 |
+| `user-guide/tui.md` | TUI details_mode 从 `compact/verbose` 改为 `hidden/collapsed/expanded`、新增 per-section 配置和运行时切换 |
+| `reference/tools-reference.md` | 内置工具从 53 个增至 55 个（新增 `browser_dialog`）、浏览器工具从 10 个增至 12 个 |
+| `reference/toolsets-reference.md` | `browser` 工具集新增 `browser_dialog` 工具 |
+| `user-guide/features/cron.md` | 任务 `model` 和 `provider` 可为 null，执行时从全局配置解析 |
+| `user-guide/docker.md` | 新增容器内直接运行 `/opt/hermes/.venv/bin/hermes` 说明 |
+| `user-guide/features/rl-training.md` | Atropos 和 Tinker 添加链接，WANDB_API_KEY 说明更新 |
+| `user-guide/messaging/discord.md` | 新增 `DISCORD_COMMAND_SYNC_POLICY` 环境变量 |
+| `reference/environment-variables.md` | 新增 `DISCORD_COMMAND_SYNC_POLICY` 环境变量 |
+| `developer-guide/agent-loop.md` | `_api_call_with_interrupt` → `_interruptible_api_call` |
+| `developer-guide/adding-providers.md` | 同上 |
+| `guides/daily-briefing-bot.md` | 新增创建 Cron 任务前的模型/提供商配置说明 |
+
+**新增 Skill 文档（133 个）：**
+上游新增了大量 Skill 分类页面文档，包括 autonomous-ai-agents、creative、data-science、devops、dogfood、email、gaming、github、media、mlops、note-taking、productivity、red-teaming、research、smart-home、social-media、software-development 等分类下的 133 个新文档。这些文档目前无中文翻译，待后续处理。
+
+**版本状态：** 上游无新增版本发布（最新 v0.10.0）
+
+---
+
 ## 2026-04-23
 
 **同步上游更改：8 个文件**

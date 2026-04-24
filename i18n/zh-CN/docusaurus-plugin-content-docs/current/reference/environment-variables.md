@@ -206,6 +206,7 @@ description: "Hermes Agent 所有环境变量的完整参考"
 | `DISCORD_PROXY` | Discord 连接的代理 URL — 覆盖 `HTTPS_PROXY`。支持 `http://`、`https://`、`socks5://` |
 | `DISCORD_HOME_CHANNEL` | Cron 消息发送的默认 Discord 频道 |
 | `DISCORD_HOME_CHANNEL_NAME` | Discord 主频道的显示名称 |
+| `DISCORD_COMMAND_SYNC_POLICY` | Discord 斜杠命令启动同步策略：`safe`（差异和协调）、`bulk`（旧版 `tree.sync()`）或 `off` |
 | `DISCORD_REQUIRE_MENTION` | 在服务器频道中需要 @提及才回复 |
 | `DISCORD_FREE_RESPONSE_CHANNELS` | 不需要 @提及的频道 ID 列表（逗号分隔） |
 | `DISCORD_AUTO_THREAD` | 支持时自动将长回复转为话题 |
