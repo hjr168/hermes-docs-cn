@@ -11,6 +11,21 @@ description: Hermes Agent 中文文档同步记录
 
 ## 2026-04-26
 
+**版本更新：v0.11.0 — Interface 版本（2026-04-23）**
+
+上游发布 v0.11.0 版本，主要更新：
+- 全新 React/Ink TUI（`hermes --tui`）
+- 可插拔传输层架构 + 原生 AWS Bedrock
+- 5 条新推理路径（NVIDIA NIM、Arcee AI、Step Plan、Gemini CLI OAuth、Vercel ai-gateway）
+- GPT-5.5 via Codex OAuth
+- QQBot（第 17 个消息平台）
+- 插件系统大幅扩展（新增多个钩子）
+- `/steer` 运行中 Agent 引导
+- Webhook 直传模式
+- 仪表盘插件系统 + 实时主题切换
+
+中文博客已更新：`blog/v0.11.0-interface.md`
+
 **同步上游更改：约 15 个文件**
 
 | 文件 | 更新内容 |
