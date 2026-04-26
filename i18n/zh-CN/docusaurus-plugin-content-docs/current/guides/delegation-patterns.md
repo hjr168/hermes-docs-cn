@@ -214,8 +214,24 @@ delegate_task(
 
 ## 约束
 
-- **默认 3 个并行任务** — 批处理默认 3 个并发子 Agent（可通过 config.yaml 中的 `delegation.max_concurrent_children` 配置）
-- **不可嵌套** — 子 Agent 不能调用 `delegate_task`、`clarify`、`memory`、`send_message` 或 `execute_code`
+- **默认 3 个并行任务**：批处理默认 3 个并发子 Agent（可通过 config.yaml 中的 `delegation.max_concurrent_children` 配置，无硬上限，只有 1 的下限）
+- **嵌套委托是可选的**：叶子子 Agent（默认）不能调用 `delegate_task`、`clarify`、`memory`、`send_message` 或 `execute_code`。编排器子 Agent（`role="orchestrator"`）保留 `delegate_task` 以进一步委托，但仅在 `delegation.max_spawn_depth` 从默认值 1 提高时（支持 1-3）；其他四个仍被阻止。也可通过 `delegation.orchestrator_enabled: false` 全局禁用。
+
+### 调优并发和深度
+
+| 配置 | 默认值 | 范围 | 效果 |
+|--------|---------|-------|--------|
+| `max_concurrent_children` | 3 | >=1 | 每次 `delegate_task` 调用的并行批处理大小 |
+| `max_spawn_depth` | 1 | 1-3 | 可以进一步委托多少层嵌套 |
+
+示例：运行 30 个并行工作器和嵌套子 Agent：
+
+```yaml
+delegation:
+  max_concurrent_children: 30
+  max_spawn_depth: 2
+```
+
 - **独立终端** — 每个子 Agent 获得自己的终端会话，有独立的工作目录和状态
 - **无对话历史** — 子 Agent 只看到你放在 `goal` 和 `context` 中的内容
 - **默认 50 次迭代** — 简单任务设置更低的 `max_iterations` 以节省成本
