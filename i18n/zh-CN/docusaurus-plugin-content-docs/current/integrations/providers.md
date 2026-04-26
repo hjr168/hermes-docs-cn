@@ -204,6 +204,18 @@ Copilot API **不**支持经典个人访问令牌（`ghp_*`）。支持的令牌
 如果你的 `gh auth token` 返回 `ghp_*` 令牌，请使用 `hermes model` 通过 OAuth 认证。
 :::
 
+:::info Copilot auth behavior in Hermes
+Hermes 将支持的 GitHub 令牌（`gho_*`、`github_pat_*` 或 `ghu_*`）直接发送到 `api.githubcopilot.com`，并包含 Copilot 特定头（`Editor-Version`、`Copilot-Integration-Id`、`Openai-Intent`、`x-initiator`）。
+
+在 HTTP 401 时，Hermes 现在在回退前执行一次性的凭据恢复：
+
+1. 通过正常优先级链重新解析令牌（`COPILOT_GITHUB_TOKEN` → `GH_TOKEN` → `GITHUB_TOKEN` → `gh auth token`）
+2. 用刷新的头重建共享的 OpenAI 客户端
+3. 重试请求一次
+
+一些较旧的社区代理使用 `api.github.com/copilot_internal/v2/token` 交换流程。该端点对于某些账户类型可能不可用（返回 404）。因此 Hermes 将直接令牌认证保持为主要路径，并依靠运行时凭据刷新 + 重试来保持健壮性。
+:::
+
 **API 路由**: GPT-5+ 模型（`gpt-5-mini` 除外）自动使用 Responses API。所有其他模型（GPT-4o、Claude、Gemini 等）使用 Chat Completions。模型从实时 Copilot 目录自动检测。
 
 **`copilot-acp` — Copilot ACP Agent 后端**。将本地 Copilot CLI 作为子进程启动：

@@ -84,7 +84,7 @@ hermes chat [options]
 | `-q`、`--query "..."` | 单次非交互式提示。 |
 | `-m`、`--model <model>` | 覆盖本次运行的模型。 |
 | `-t`、`--toolsets <csv>` | 启用逗号分隔的工具集。 |
-| `--provider <provider>` | 强制指定提供商：`auto`、`openrouter`、`nous`、`openai-codex`、`copilot-acp`、`copilot`、`anthropic`、`gemini`、`google-gemini-cli`、`huggingface`、`zai`、`kimi-coding`、`kimi-coding-cn`、`minimax`、`minimax-cn`、`kilocode`、`xiaomi`、`arcee`、`alibaba`、`deepseek`、`nvidia`、`ollama-cloud`、`xai`（别名 `grok`）、`qwen-oauth`、`bedrock`、`opencode-zen`、`opencode-go`、`ai-gateway`。 |
+| `--provider <provider>` | 强制指定提供商：`auto`、`openrouter`、`nous`、`openai-codex`、`copilot-acp`、`copilot`、`anthropic`、`gemini`、`google-gemini-cli`、`huggingface`、`zai`、`kimi-coding`、`kimi-coding-cn`、`minimax`、`minimax-cn`、`kilocode`、`xiaomi`、`arcee`、`alibaba`、`deepseek`、`nvidia`、`ollama-cloud`、`xai`（别名 `grok`）、`qwen-oauth`、`bedrock`、`opencode-zen`、`opencode-go`、`ai-gateway`、`azure-foundry`。 |
 | `-s`、`--skills <name>` | 预加载一个或多个 Skill（可重复或逗号分隔）。 |
 | `-v`、`--verbose` | 详细输出。 |
 | `-Q`、`--quiet` | 编程模式：隐藏横幅/进度条/工具预览。 |
@@ -187,10 +187,12 @@ hermes gateway <subcommand>
 ## `hermes setup`
 
 ```bash
-hermes setup [model|tts|terminal|gateway|tools|agent] [--non-interactive] [--reset]
+hermes setup [model|tts|terminal|gateway|tools|agent] [--non-interactive] [--reset] [--quick] [--reconfigure]
 ```
 
-使用完整向导或跳转到特定部分：
+**首次运行：** 启动首次运行向导。
+
+**返回用户（已配置）：** 直接进入完整重新配置向导 — 每个提示显示你当前的值作为默认值，按 Enter 保留或输入新值。无菜单。
 
 | 部分 | 说明 |
 |------|------|
@@ -204,8 +206,10 @@ hermes setup [model|tts|terminal|gateway|tools|agent] [--non-interactive] [--res
 
 | 选项 | 说明 |
 |------|------|
+| `--quick` | 返回用户运行：仅提示缺失或未设置的项目。跳过已配置的项目。 |
 | `--non-interactive` | 使用默认值/环境变量，无需提示。 |
 | `--reset` | 在设置前将配置重置为默认值。 |
+| `--reconfigure` | 向后兼容别名 — 在现有安装上运行裸 `hermes setup` 现在默认执行此操作。 |
 
 ## `hermes whatsapp`
 

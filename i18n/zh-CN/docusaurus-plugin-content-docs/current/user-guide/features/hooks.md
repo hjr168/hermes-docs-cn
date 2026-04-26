@@ -245,6 +245,8 @@ def register(ctx):
 | [`on_session_end`](#on_session_end) | 会话结束 | 忽略 |
 | [`on_session_finalize`](#on_session_finalize) | CLI/Gateway 拆卸活跃会话（刷新、保存、统计） | 忽略 |
 | [`on_session_reset`](#on_session_reset) | Gateway 切换新的会话键（如 `/new`、`/reset`） | 忽略 |
+| [`subagent_stop`](#subagent_stop) | `delegate_task` 子代理已退出 | 忽略 |
+| [`pre_gateway_dispatch`](#pre_gateway_dispatch) | Gateway 收到用户消息，在认证 + 分派之前 | `{"action": "skip" \| "rewrite" \| "allow", ...}` 以影响流程 |
 
 ---
 
@@ -308,7 +310,8 @@ def register(ctx):
 **回调签名：**
 
 ```python
-def my_callback(tool_name: str, args: dict, result: str, task_id: str, **kwargs):
+def my_callback(tool_name: str, args: dict, result: str, task_id: str,
+               duration_ms: int, **kwargs):
 ```
 
 | 参数 | 类型 | 说明 |
@@ -317,24 +320,27 @@ def my_callback(tool_name: str, args: dict, result: str, task_id: str, **kwargs)
 | `args` | `dict` | 模型传递给工具的参数 |
 | `result` | `str` | 工具的返回值（始终为 JSON 字符串） |
 | `task_id` | `str` | 会话/任务标识符。未设置时为空字符串。 |
+| `duration_ms` | `int` | 工具调度所花费的时间，以毫秒为单位（使用 `time.monotonic()` 在 `registry.dispatch()` 周围测量）。 |
 
 **触发位置：** 在 `model_tools.py` 的 `handle_function_call()` 中，工具处理函数返回之后。每次工具调用触发一次。如果工具抛出未处理的异常**不会**触发（错误被捕获并作为错误 JSON 字符串返回，`post_tool_call` 会以该错误字符串作为 `result` 触发）。
 
 **返回值：** 忽略。
 
-**使用场景：** 记录工具结果、指标收集、跟踪工具成功/失败率、特定工具完成时发送通知。
+**使用场景：** 记录工具结果、指标收集、跟踪工具成功/失败率、延迟仪表板、per-tool 预算警报、特定工具完成时发送通知。
 
 **示例 — 跟踪工具使用指标：**
 
 ```python
-from collections import Counter
+from collections import Counter, defaultdict
 import json
 
 _tool_counts = Counter()
 _error_counts = Counter()
+_latency_ms = defaultdict(list)
 
-def track_metrics(tool_name, result, **kwargs):
+def track_metrics(tool_name, result, duration_ms=0, **kwargs):
     _tool_counts[tool_name] += 1
+    _latency_ms[tool_name].append(duration_ms)
     try:
         parsed = json.loads(result)
         if "error" in parsed:
@@ -645,6 +651,32 @@ def my_callback(session_id: str, platform: str, **kwargs):
 **返回值：** 忽略。
 
 **使用场景：** 重置以 `session_id` 为键的每会话缓存、发送"会话已轮换"分析、准备新的状态桶。
+
+---
+
+### `pre_gateway_dispatch`
+
+在 Gateway 中每个入站 `MessageEvent` **触发一次**，在内部事件守卫之后但在认证/配对和 Agent 分派**之前**。这是 Gateway 级消息流策略（监听模式、人工交接、per-chat 路由等）的拦截点，这些策略无法干净地适配到任何单一平台适配器。
+
+**回调签名：**
+
+```python
+def my_callback(event, gateway, session_store, **kwargs):
+```
+
+| 参数 | 类型 | 说明 |
+|-----------|------|-------------|
+| `event` | `MessageEvent` | 标准化的入站消息（具有 `.text`、`.source`、`.message_id`、`.internal` 等）。 |
+| `gateway` | `GatewayRunner` | 活动的 Gateway runner，使插件可以调用 `gateway.adapters[platform].send(...)` 进行侧通道回复（所有者通知等）。 |
+| `session_store` | `SessionStore` | 用于通过 `session_store.append_to_transcript(...)` 静默摄取到转录中。 |
+
+**触发位置：** 在 `gateway/run.py` 的 `GatewayRunner._handle_message()` 中，内部 `is_internal` 计算之后。**内部事件完全跳过此钩子**（它们是系统生成的——后台进程完成等——不能被用户面向的策略 gatekeep）。
+
+**返回值：** `None` 或 dict。第一个被识别的 action dict 获胜；剩余的插件结果被忽略。插件回调中的异常被捕获并记录日志；网关在错误时始终回退到正常分派。
+
+| 返回 | 效果 |
+|------|------|
+| `{"action": "skip", "reason": "..."}` | 丢弃消息 — 无 Agent 回复，无配对流程，无认证。插件假定已处理（如静默摄取到转录中）。 |
 
 ---
 

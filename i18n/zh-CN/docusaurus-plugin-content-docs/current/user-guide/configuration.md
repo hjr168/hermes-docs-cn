@@ -639,6 +639,18 @@ credential_pool_strategies:
 
 Hermes 使用轻量级"辅助"模型处理图片分析、网页摘要和浏览器截图分析等辅助任务。默认情况下，这些使用 **Gemini Flash** 通过自动检测 —— 无需配置。
 
+### 视频教程
+
+<div style={{position: 'relative', width: '100%', aspectRatio: '16 / 9', marginBottom: '1.5rem'}}>
+  <iframe
+    src="https://www.youtube.com/embed/NoF-YajElIM"
+    title="Hermes Agent — Auxiliary Models Tutorial"
+    style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0}}
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+  />
+</div>
+
 ### 通用配置模式
 
 Hermes 中的每个模型插槽 —— 辅助任务、压缩、回退 —— 都使用相同的三个旋钮：
@@ -651,7 +663,7 @@ Hermes 中的每个模型插槽 —— 辅助任务、压缩、回退 —— 都
 
 当设置了 `base_url` 时，Hermes 忽略 Provider 并直接调用该端点（使用 `api_key` 或 `OPENAI_API_KEY` 进行认证）。当只设置了 `provider` 时，Hermes 使用该 Provider 的内置认证和基础 URL。
 
-辅助任务的可用 Provider：`auto`、`main`，加上 [Provider 注册表](/docs/reference/environment-variables)中的任何 Provider —— `openrouter`、`nous`、`openai-codex`、`copilot`、`copilot-acp`、`anthropic`、`gemini`、`google-gemini-cli`、`qwen-oauth`、`zai`、`kimi-coding`、`kimi-coding-cn`、`minimax`、`minimax-cn`、`deepseek`、`nvidia`、`xai`、`ollama-cloud`、`alibaba`、`bedrock`、`huggingface`、`arcee`、`xiaomi`、`kilocode`、`opencode-zen`、`opencode-go`、`ai-gateway` —— 或 `custom_providers` 列表中的任何命名自定义 Provider（例如 `provider: "beans"`）。
+辅助任务的可用 Provider：`auto`、`main`，加上 [Provider 注册表](/docs/reference/environment-variables)中的任何 Provider —— `openrouter`、`nous`、`openai-codex`、`copilot`、`copilot-acp`、`anthropic`、`gemini`、`google-gemini-cli`、`qwen-oauth`、`zai`、`kimi-coding`、`kimi-coding-cn`、`minimax`、`minimax-cn`、`deepseek`、`nvidia`、`xai`、`ollama-cloud`、`alibaba`、`bedrock`、`huggingface`、`arcee`、`xiaomi`、`kilocode`、`opencode-zen`、`opencode-go`、`ai-gateway`、`azure-foundry` —— 或 `custom_providers` 列表中的任何命名自定义 Provider（例如 `provider: "beans"`）。
 
 :::warning `"main"` 仅用于辅助任务
 `"main"` Provider 选项表示"使用我主 Agent 使用的任何 Provider" —— 它只在 `auxiliary:`、`compression:` 和 `fallback_model:` 配置内有效。它**不是**顶层 `model.provider` 设置的有效值。如果你使用自定义 OpenAI 兼容端点，在 `model:` 部分设置 `provider: custom`。参见 [AI Providers](/docs/integrations/providers) 了解所有主模型 Provider 选项。
@@ -710,14 +722,6 @@ auxiliary:
 
   # MCP 工具分发
   mcp:
-    provider: "auto"
-    model: ""
-    base_url: ""
-    api_key: ""
-    timeout: 30
-
-  # 记忆刷新 — 摘要对话用于持久记忆
-  flush_memories:
     provider: "auto"
     model: ""
     base_url: ""

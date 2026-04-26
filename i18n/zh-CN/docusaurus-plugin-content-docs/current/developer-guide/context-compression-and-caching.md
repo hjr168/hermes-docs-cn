@@ -305,9 +305,9 @@ Prompt 缓存在以下条件满足时自动启用：
 - Provider 支持 `cache_control`（原生 Anthropic API 或 OpenRouter）
 
 ```yaml
-# config.yaml — TTL 可配置
-model:
-  cache_ttl: "5m"   # "5m" 或 "1h"
+# config.yaml — TTL 可配置（必须为 "5m" 或 "1h"）
+prompt_caching:
+  cache_ttl: "5m"
 ```
 
 CLI 在启动时显示缓存状态：

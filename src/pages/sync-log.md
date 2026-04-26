@@ -9,6 +9,29 @@ description: Hermes Agent 中文文档同步记录
 
 ---
 
+## 2026-04-26
+
+**同步上游更改：约 15 个文件**
+
+| 文件 | 更新内容 |
+|------|----------|
+| `user-guide/features/hooks.md` | 新增 `pre_gateway_dispatch` 钩子和 `duration_ms` 参数到 `post_tool_call` 回调 |
+| `user-guide/features/fallback-providers.md` | 移除 `flush_memories` 辅助任务配置 |
+| `user-guide/configuration.md` | 辅助任务 Provider 列表新增 `azure-foundry`、新增视频教程、移除 `flush_memories` 配置示例 |
+| `reference/cli-commands.md` | `hermes setup` 新增 `--quick` 和 `--reconfigure` 选项、Provider 列表新增 `azure-foundry` |
+| `developer-guide/context-compression-and-caching.md` | `cache_ttl` 配置从 `model.cache_ttl` 移至 `prompt_caching.cache_ttl` |
+| `developer-guide/architecture.md` | 图表框线调整 |
+| `integrations/providers.md` | Copilot 新增运行时凭据刷新和重试机制说明 |
+
+**新增文档：**
+- `guides/azure-foundry.md` - Azure AI Foundry 集成指南（待翻译）
+- `user-guide/features/spotify.md` - Spotify 控制功能（待翻译）
+- `user-guide/features/extending-the-dashboard.md` - Dashboard 扩展指南（待翻译）
+
+**版本状态：** 上游无新增版本发布
+
+---
+
 ## 2026-04-24
 
 **同步上游更改：16 个文件更新 + 133 个新 Skill 文档**

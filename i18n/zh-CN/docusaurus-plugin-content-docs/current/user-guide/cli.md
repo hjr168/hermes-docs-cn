@@ -234,6 +234,14 @@ display:
 
 当你想准备后续消息而不意外取消正在执行的工作时，排队模式非常有用。未知值会回退到 `"interrupt"`。
 
+你也可以在 CLI 内部更改：
+
+```text
+/busy queue
+/busy interrupt
+/busy status
+```
+
 ### 挂起到后台
 
 在 Unix 系统上，按 **`Ctrl+Z`** 将 Hermes 挂起到后台 —— 就像任何终端进程一样。Shell 会打印确认信息：
