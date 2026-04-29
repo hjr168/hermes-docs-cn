@@ -9,6 +9,27 @@ description: Hermes Agent 中文文档同步记录
 
 ---
 
+## 2026-04-29
+
+**同步上游更改：33 个文件，3 个新增**
+
+| 类别 | 更新内容 |
+|------|----------|
+| **新增文档** | `user-guide/messaging/yuanbao.md`（腾讯元宝接入）、`reference/model-catalog.md`（远程模型清单）、`guides/azure-foundry.md` |
+| **功能更新** | hooks.md 大幅改写（BOOT.md 教程替换内置钩子）、built-in-plugins.md 新增内容、slack.md 扩容至 110 行 |
+| **技能系统** | autonomous-ai-agents 和 creative-touchdesigner 迁移至 `bundled/` 分类 |
+| **其他** | docker.md、browser.md、delegation.md、configuration.md、cli-commands.md 等 20+ 文件同步上游更新 |
+
+**中文翻译新增：**
+- `i18n/zh-CN/.../user-guide/messaging/yuanbao.md`（新建，~5,900 字）
+- `i18n/zh-CN/.../reference/model-catalog.md`（新建，~2,400 字）
+
+**待处理：** hooks.md、docker.md、built-in-plugins.md、slack.md、browser.md 等已有中文翻译的文件，需对照上游 diff 进行增量翻译更新。
+
+**版本状态：** 上游无新版本（最新 v0.11.0，2026-04-23）。本地 hermes-agent 落后上游 **333 commits**。
+
+---
+
 ## 2026-04-26
 
 **版本更新：v0.11.0 — Interface 版本（2026-04-23）**
