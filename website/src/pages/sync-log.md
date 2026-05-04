@@ -9,6 +9,39 @@ description: Hermes Agent 中文文档同步记录
 
 ---
 
+## 2026-05-04
+
+**目录结构重组 + 同步上游更改：4 个文件**
+
+本次做了两项重要更新：
+
+**1. 目录结构重组（与上游保持一致）**
+将所有文档相关文件移入 `website/` 子目录，与上游 `NousResearch/hermes-agent` 目录结构对齐：
+- `docs/` → `website/docs/`
+- `docusaurus.config.ts` → `website/docusaurus.config.ts`
+- `i18n/` → `website/i18n/`
+- `blog/` → `website/blog/`
+- `src/` → `website/src/`
+- `static/` → `website/static/`
+- `package.json`、`node_modules` → `website/`
+
+同步更新 GitHub Actions workflow，改为 `working-directory: website` 构建。
+
+**2. 同步上游英文文档：4 个文件**
+
+| 文件 | 更新内容 |
+|------|----------|
+| `user-guide/docker.md` | Dashboard 章节重写（移除 `HERMES_DASHBOARD=1` 内置方式，改为独立容器方案） |
+| `user-guide/messaging/telegram.md` | 移除 MEDIA 文件扩展名表格，更新 Webhook Secret 配置说明 |
+| `reference/environment-variables.md` | 移除 OpenRouter 缓存相关环境变量，简化 MiniMax API Key 说明 |
+| `user-guide/configuration.md` | 移除 `vercel_sandbox` 终端后端，修正工作目录说明 |
+
+**中文翻译状态：** 本次更新不涉及新增文档，中文翻译保持有效，无需额外更新。
+
+**版本状态：** 上游无新版本发布（最新 v0.11.0，2026-04-23）。
+
+---
+
 ## 2026-04-29
 
 **同步上游更改：33 个文件，3 个新增**
