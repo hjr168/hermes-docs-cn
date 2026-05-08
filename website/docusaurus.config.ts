@@ -3,18 +3,17 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Hermes 中文文档',
-  tagline: 'Hermes Agent 中文社区翻译',
+  title: 'Hermes Agent',
+  tagline: 'The self-improving AI agent',
   favicon: 'img/favicon.ico',
 
-  url: 'https://hermes-doc-cn.huangjiarong.top',
-  baseUrl: '/',
+  url: 'https://hermes-agent.nousresearch.com',
+  baseUrl: '/docs/',
 
-  organizationName: 'hjr168',
-  projectName: 'hermes-docs-cn',
+  organizationName: 'NousResearch',
+  projectName: 'hermes-agent',
 
   onBrokenLinks: 'warn',
-  onBrokenAnchors: 'warn',
 
   markdown: {
     mermaid: true,
@@ -24,8 +23,17 @@ const config: Config = {
   },
 
   i18n: {
-    defaultLocale: 'zh-CN',
-    locales: ['en', 'zh-CN'],
+    defaultLocale: 'en',
+    locales: ['en', 'zh-Hans'],
+    localeConfigs: {
+      en: {
+        label: 'English',
+      },
+      'zh-Hans': {
+        label: '简体中文',
+        htmlLang: 'zh-Hans',
+      },
+    },
   },
 
   themes: [
@@ -36,22 +44,25 @@ const config: Config = {
       ({
         hashed: true,
         language: ['en', 'zh'],
-        indexBlog: true,
+        indexBlog: false,
         docsRouteBasePath: '/',
-        highlightSearchTermsOnTargetPage: true,
+        // Disabled: appends ?_highlight=... to URLs (before the #anchor),
+        // which makes copy/pasted doc links ugly. Ctrl+F on the page is fine.
+        highlightSearchTermsOnTargetPage: false,
+        // Exclude the auto-generated per-skill catalog pages from search.
+        // There are hundreds of them and they dominate results for generic
+        // terms, drowning out the real user-guide / reference docs.
+        // The two human-written catalog indexes (reference/skills-catalog,
+        // reference/optional-skills-catalog) remain indexed.
+        //
+        // Note: ignoreFiles matches `route` (baseUrl stripped, no leading
+        // slash). With baseUrl '/docs/', `/docs/user-guide/skills/bundled/x`
+        // becomes 'user-guide/skills/bundled/x'.
+        ignoreFiles: [
+          /^user-guide\/skills\/bundled\//,
+          /^user-guide\/skills\/optional\//,
+        ],
       }),
-    ],
-  ],
-
-  plugins: [
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        createRedirects(existingPath: string) {
-          if (existingPath.startsWith('/en/')) return undefined;
-          return ['/zh-CN' + existingPath];
-        },
-      },
     ],
   ],
 
@@ -62,16 +73,9 @@ const config: Config = {
         docs: {
           routeBasePath: '/',  // Docs at the root of /docs/
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/hjr168/hermes-docs-cn/edit/main/docs/',
+          editUrl: 'https://github.com/NousResearch/hermes-agent/edit/main/website/',
         },
-        blog: {
-          routeBasePath: 'changelog',
-          path: 'blog',
-          blogTitle: '版本动态',
-          blogSidebarTitle: '版本动态',
-          blogSidebarCount: 'ALL',
-          postsPerPage: 10,
-        },
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -92,7 +96,7 @@ const config: Config = {
       },
     },
     navbar: {
-      title: 'Hermes 中文文档',
+      title: 'Hermes Agent',
       logo: {
         alt: 'Hermes Agent',
         src: 'img/logo.png',
@@ -105,27 +109,21 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          to: '/changelog',
-          label: '版本动态',
+          to: '/skills',
+          label: 'Skills',
           position: 'left',
         },
         {
-          to: '/sync-log',
-          label: '同步日志',
-          position: 'left',
-        },
-        {
-          to: '/about',
-          label: '关于',
-          position: 'left',
-        },
-        {
-          href: 'https://github.com/NousResearch/hermes-agent',
-          label: '上游项目',
+          type: 'localeDropdown',
           position: 'right',
         },
         {
-          href: 'https://github.com/hjr168/hermes-docs-cn',
+          href: 'https://hermes-agent.nousresearch.com',
+          label: 'Home',
+          position: 'right',
+        },
+        {
+          href: 'https://github.com/NousResearch/hermes-agent',
           label: 'GitHub',
           position: 'right',
         },
@@ -134,40 +132,37 @@ const config: Config = {
           label: 'Discord',
           position: 'right',
         },
-        {
-          type: 'localeDropdown',
-          position: 'right',
-        },
       ],
     },
     footer: {
       style: 'dark',
       links: [
         {
-          title: '文档',
+          title: 'Docs',
           items: [
-            { label: '快速开始', to: '/getting-started/quickstart' },
-            { label: '用户指南', to: '/user-guide/cli' },
-            { label: '开发者指南', to: '/developer-guide/architecture' },
-            { label: '参考', to: '/reference/cli-commands' },
+            { label: 'Getting Started', to: '/getting-started/quickstart' },
+            { label: 'User Guide', to: '/user-guide/cli' },
+            { label: 'Developer Guide', to: '/developer-guide/architecture' },
+            { label: 'Reference', to: '/reference/cli-commands' },
           ],
         },
         {
-          title: '社区',
+          title: 'Community',
           items: [
             { label: 'Discord', href: 'https://discord.gg/NousResearch' },
-            { label: '上游 GitHub', href: 'https://github.com/NousResearch/hermes-agent' },
+            { label: 'GitHub Discussions', href: 'https://github.com/NousResearch/hermes-agent/discussions' },
+            { label: 'Skills Hub', href: 'https://agentskills.io' },
           ],
         },
         {
-          title: '更多',
+          title: 'More',
           items: [
-            { label: '本站 GitHub', href: 'https://github.com/hjr168/hermes-docs-cn' },
+            { label: 'GitHub', href: 'https://github.com/NousResearch/hermes-agent' },
             { label: 'Nous Research', href: 'https://nousresearch.com' },
           ],
         },
       ],
-      copyright: `非官方社区翻译 · 原始项目 <a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a> · MIT License · ${new Date().getFullYear()}`,
+      copyright: `Built by <a href="https://nousresearch.com">Nous Research</a> · MIT License · ${new Date().getFullYear()}`,
     },
     prism: {
       theme: prismThemes.github,

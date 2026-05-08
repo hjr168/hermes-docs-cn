@@ -9,6 +9,61 @@ description: Hermes Agent 中文文档同步记录
 
 ---
 
+## 2026-05-08
+
+**同步上游更改：308 个文件（最大规模同步）+ 新增中文博客 v0.12.0 / v0.13.0**
+
+### 文档结构重大重组
+
+上游 `NousResearch/hermes-agent` 进行了全面的文档结构重组，大量散落在根目录的 Markdown 文件迁移至 `website/docs/` 子目录，文件路径发生了大量重命名（R100 级别）。
+
+**主要重组内容：**
+
+| 类型 | 变化 |
+|------|------|
+| 文档根目录 | `docs/` 下所有文件迁移至 `website/docs/` |
+| 配置文件 | `docusaurus.config.ts`、`sidebars.ts` 迁移至 `website/` |
+| 静态资源 | `src/`、`i18n/`、`static/` 均归入 `website/` |
+| Blog | `blog/` → `website/blog/` |
+| RELEASE 文件 | `RELEASE_v*.md` 保留在根目录 |
+
+### 新增文档（297 个新文件）
+
+**开发者指南（24 个文件）：** 新增 `browser-supervisor.md`（CDP 监督器）、`image-gen-provider-plugin.md`、`model-provider-plugin.md` 等插件开发文档。
+
+**Getting Started（7 个文件）：** `installation.md`、`learning-path.md`、`nix-setup.md`、`quickstart.md`、`termux.md`、`updating.md`。
+
+**Guides（20 个文件）：** 新增 `azure-foundry.md`、`cron-script-only.md`、`google-gemini.md`、`local-ollama-setup.md`、`minimax-oauth.md` 等集成指南。
+
+**User Guide Features（100+ 个文件）：** 大幅扩展，新增 `acp.md`、`batch-processing.md`、`code-execution.md`、`context-files.md`、`context-references.md`、`honcho.md`、`provider-routing.md`、`rl-training.md`、`skins.md`、`voice-mode.md`、`web-dashboard.md` 等功能文档。
+
+**User Guide Skills（100+ 个文件）：** 大量 Skill 分类文档，包括 autonomous-ai-agents、creative、data-science、devops、dogfood、email、gaming、github、macos-development、media、mlops、note-taking、productivity、red-teaming、research、smart-home、social-media、software-development、yuenbao 等分类下的所有 Skill 文档。
+
+**Reference（20+ 个文件）：** 新增 `mcp-config-reference.md`、`model-catalog.md`、`profile-commands.md` 等参考文档。
+
+**Integrations：** 新增 `providers.md`、`index.md` 等。
+
+### 新增中文博客
+
+| 博客 | 版本 | 日期 | 主要内容 |
+|------|------|------|----------|
+| `v0.12.0-curator.md` | Curator | 2026-04-30 | Autonomous Curator 自动技能维护、自改进循环全面升级、4 个新推理 Provider、腾讯元宝第 18 平台、Spotify 原生集成、ComfyUI/TouchDesigner 升级内置、TUI 冷启动加速 57% |
+| `v0.13.0-tenacity.md` | Tenacity | 2026-05-07 | Multi-Agent Kanban 正式发布、`/goal` 目标锁定、Checkpoints v2、Cron no_agent 看门狗模式、Google Chat 第 20 平台、7 个 i18n locale、Provider 插件化、8 个 P0 安全修复 |
+
+### 翻译状态
+
+- 新增的 297 个文档均为英文，中文翻译待后续增量补充
+- `website/i18n/zh-Hans/` 目录下新增 3 个简体中文翻译文件（image-generation、tool-gateway、windows-wsl-quickstart）
+
+### 版本状态
+
+上游最新版本：
+
+- **v0.13.0 — Tenacity**（2026-05-07）：Kanban 多 Agent 看板、`/goal` 目标锁定、Checkpoints v2、Google Chat 第 20 平台、7 个 i18n locale
+- **v0.12.0 — Curator**（2026-04-30）：Autonomous Curator、自改进循环升级、4 个新 Provider、腾讯元宝、Spotify
+
+---
+
 ## 2026-05-04
 
 **目录结构重组 + 同步上游更改：4 个文件**
